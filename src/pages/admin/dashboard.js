@@ -1,29 +1,19 @@
 import { requireAuth } from "../../utils/guards.js";
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-  await requireAuth();
-
-  const data = await getAdminStats();
-  console.log("ADMIN DATA:", data);
-});
-
-import { requireAuth } from "../../utils/guards.js";
-import { supabase } from "../../services/supabase.js";
-
-import { requireAuth } from "../../utils/guards.js";
 import { supabase } from "../../services/supabase.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 🔒 Beveiliging
+  // 🔐 Beveiliging
   await requireAuth();
 
   console.log("✅ Backend dashboard geladen");
 
+  // hier komt later je dashboard-logica
+});
+
   // 👥 Medewerkers
   document.getElementById("medewerkers")?.addEventListener("click", () => {
     window.location.href = "../medewerkers/medewerkers.html";
-  });
+  });s
 
   // 📅 Dag invoer
   document.getElementById("daginvoer")?.addEventListener("click", () => {
@@ -45,4 +35,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     await supabase.auth.signOut();
     window.location.href = "../auth/login.html";
   });
-});
