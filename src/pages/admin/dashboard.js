@@ -11,29 +11,38 @@ document.addEventListener("DOMContentLoaded", async () => {
 import { requireAuth } from "../../utils/guards.js";
 import { supabase } from "../../services/supabase.js";
 
+import { requireAuth } from "../../utils/guards.js";
+import { supabase } from "../../services/supabase.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
+  // 🔒 Beveiliging
   await requireAuth();
 
-  // Navigatie
-  document.getElementById("medewerkers").onclick = () => {
+  console.log("✅ Backend dashboard geladen");
+
+  // 👥 Medewerkers
+  document.getElementById("medewerkers")?.addEventListener("click", () => {
     window.location.href = "../medewerkers/medewerkers.html";
-  };
+  });
 
-  document.getElementById("daginvoer").onclick = () => {
+  // 📅 Dag invoer
+  document.getElementById("daginvoer")?.addEventListener("click", () => {
     window.location.href = "../daginvoer/dag.html";
-  };
+  });
 
-  document.getElementById("planning").onclick = () => {
+  // 🗓 Planning
+  document.getElementById("planning")?.addEventListener("click", () => {
     window.location.href = "../planning/planning.html";
-  };
+  });
 
-  document.getElementById("leaderboard").onclick = () => {
+  // 🏆 Leaderboard
+  document.getElementById("leaderboard")?.addEventListener("click", () => {
     window.location.href = "../leaderboard/leaderboard.html";
-  };
+  });
 
-  // Logout
-  document.getElementById("logout").onclick = async () => {
+  // 🚪 Uitloggen
+  document.getElementById("logout")?.addEventListener("click", async () => {
     await supabase.auth.signOut();
     window.location.href = "../auth/login.html";
-  };
+  });
 });
