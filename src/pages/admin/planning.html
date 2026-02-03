@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>Planning – Backend</title>
+  <title>Planning </title>
 
   <style>
     body {
@@ -131,7 +131,7 @@
 
   <!-- Week planning -->
   <div class="week-grid">
-    <div class="day-column" data-day="1">
+    <div class="day-column" data-datum=""></div>
       <h3>Ma</h3>
       <ul class="day-list"></ul>
       <button class="add-btn">+</button>
@@ -139,7 +139,7 @@
 
     <div class="day-column" data-day="2">
       <h3>Di</h3>
-      <ul class="day-list"></ul>
+      <ul class="day-list" data-datum-list></ul>
       <button class="add-btn">+</button>
     </div>
 
@@ -175,16 +175,15 @@
   </div>
 
   <!-- Samenvatting per dag -->
-  <div class="summary-grid">
-    <div class="summary-cell">0</div>
-    <div class="summary-cell">0</div>
-    <div class="summary-cell">0</div>
-    <div class="summary-cell">0</div>
-    <div class="summary-cell">0</div>
-    <div class="summary-cell">0</div>
-    <div class="summary-cell">0</div>
-  </div>
-
+<div class="summary-grid">
+  <div class="summary-cell" data-teller=""></div>
+  <div class="summary-cell" data-teller=""></div>
+  <div class="summary-cell" data-teller=""></div>
+  <div class="summary-cell" data-teller=""></div>
+  <div class="summary-cell" data-teller=""></div>
+  <div class="summary-cell" data-teller=""></div>
+  <div class="summary-cell" data-teller=""></div>
+</div>
   <div class="week-total">
     Totaal aantal shifts: <strong id="weekTotal">0</strong>
   </div>

@@ -1,27 +1,45 @@
 import { supabase } from "../../services/supabase.js";
 
-console.log("🔥 planning.js geladen", new Date().toISOString());
+console.log("🔥 Weekplanning geladen");
 
 // =========================
-// DOM ELEMENTEN
+// STATE
 // =========================
-const container = document.getElementById("medewerkersContainer");
-const datumInput = document.getElementById("planningDatum");
-const opslaanBtn = document.getElementById("opslaanPlanning");
+let currentWeekStart = getMonday(new Date());
+let medewerkers = [];
+let shifts = [];
 
 // =========================
 // INIT
 // =========================
 document.addEventListener("DOMContentLoaded", async () => {
-  datumInput.valueAsDate = new Date();
-
   await laadMedewerkers();
-  await laadPlanningVoorDatum(datumInput.value);
-
-  datumInput.addEventListener("change", () => {
-    laadPlanningVoorDatum(datumInput.value);
-  });
+  await laadWeek();
 });
+
+// =========================
+// WEEK LADEN
+// =========================
+async function laadWeek() {
+  const weekStart = formatDate(currentWeekStart);
+  const weekEnd = formatDate(addDays(currentWeekStart, 6));
+
+  console.log("📅 Week laden:", weekStart, "t/m", weekEnd);
+
+  const { data, error } = await supabase
+    .from("shifts")
+    .select("medewerker_id, datum, type, medewerkers(naam)")
+    .gte("datum", weekStart)
+    .lte("datum", weekEnd);
+
+  if (error) {
+    console.error("❌ Fout bij laden shifts:", error);
+    return;
+  }
+
+  shifts = data || [];
+  renderWeek();
+}
 
 // =========================
 // MEDEWERKERS LADEN
@@ -38,127 +56,91 @@ async function laadMedewerkers() {
     return;
   }
 
-  renderMedewerkers(data);
+  medewerkers = data || [];
 }
 
 // =========================
-// MEDEWERKERS RENDEREN
+// RENDER WEEK
 // =========================
-function renderMedewerkers(medewerkers) {
-  container.innerHTML = "";
+function renderWeek() {
+  let totaal = 0;
 
-  medewerkers.forEach(({ id, naam }) => {
-    const row = document.createElement("div");
-    row.className = "row";
-    row.dataset.medewerkerId = id;
+  for (let i = 0; i < 7; i++) {
+    const dag = addDays(currentWeekStart, i);
+    const datum = formatDate(dag);
+    const dagContainer = document.querySelector(
+      `[data-datum="${datum}"]`
+    );
 
-    row.innerHTML = `
-      <strong>${naam}</strong>
+    if (!dagContainer) continue;
 
-      <label>
-        <input type="radio" name="shift_${id}" value="">
-        Niet ingepland
-      </label>
+    const dagShifts = shifts.filter(s => s.datum === datum);
+    totaal += dagShifts.length;
 
-      <label>
-        <input type="radio" name="shift_${id}" value="full">
-        Hele dag
-      </label>
+    dagContainer.innerHTML = "";
 
-      <label>
-        <input type="radio" name="shift_${id}" value="half">
-        Halve dag
-      </label>
-    `;
+    dagShifts.forEach(shift => {
+      const el = document.createElement("div");
+      el.className = "shift";
+      el.innerHTML = `
+        ${shift.medewerkers?.naam || "Onbekend"}
+        <span class="remove" data-id="${shift.medewerker_id}" data-datum="${datum}">✖</span>
+      `;
+      dagContainer.appendChild(el);
+    });
 
-    container.appendChild(row);
+    updateDagTeller(datum, dagShifts.length);
+  }
+
+  document.getElementById("weekTotal").innerText = totaal;
+  bindRemoveEvents();
+}
+
+// =========================
+// REMOVE SHIFT
+// =========================
+function bindRemoveEvents() {
+  document.querySelectorAll(".remove").forEach(btn => {
+    btn.addEventListener("click", async e => {
+      const medewerkerId = e.target.dataset.id;
+      const datum = e.target.dataset.datum;
+
+      await supabase
+        .from("shifts")
+        .delete()
+        .eq("medewerker_id", medewerkerId)
+        .eq("datum", datum);
+
+      await laadWeek();
+    });
   });
 }
 
 // =========================
-// OPSLAAN PLANNING
+// HELPERS
 // =========================
-opslaanBtn.addEventListener("click", async () => {
-  const datum = datumInput.value;
-  if (!datum) {
-    alert("Kies een datum");
-    return;
-  }
-
-  const rows = document.querySelectorAll(".row");
-
-  for (const row of rows) {
-    const gekozen = row.querySelector("input[type='radio']:checked");
-    if (!gekozen) continue;
-
-    const medewerkerId = row.dataset.medewerkerId;
-    const type = gekozen.value;
-
-    await slaPlanningOp(medewerkerId, datum, type);
-  }
-
-  alert("✅ Planning opgeslagen");
-});
-
-// =========================
-// PLANNING OPSLAAN
-// =========================
-async function slaPlanningOp(medewerkerId, datum, type) {
-  const { error } = await supabase
-    .from("shifts")
-    .upsert(
-      {
-        medewerker_id: medewerkerId,
-        datum,
-        type
-      },
-      {
-        onConflict: "medewerker_id,datum"
-      }
-    );
-
-  if (error) {
-    console.error("❌ Fout bij opslaan planning:", error);
-  }
+function updateDagTeller(datum, aantal) {
+  const teller = document.querySelector(
+    `[data-teller="${datum}"]`
+  );
+  if (teller) teller.innerText = aantal;
 }
 
-// =========================
-// PLANNING LADEN
-// =========================
-async function laadPlanningVoorDatum(datum) {
-  if (!datum) return;
+function getMonday(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
 
-  console.log("📅 Planning laden voor", datum);
+function addDays(date, days) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
 
-  const { data, error } = await supabase
-    .from("shifts")
-    .select("medewerker_id, type")
-    .eq("datum", datum);
-
-  if (error) {
-    console.error("❌ Fout bij laden planning:", error);
-    return;
-  }
-
-  // reset alles
-  document
-    .querySelectorAll("input[type='radio']")
-    .forEach(radio => (radio.checked = false));
-
-  // toepassen bestaande planning
-  data.forEach(({ medewerker_id, type }) => {
-    const row = document.querySelector(
-      `.row[data-medewerker-id="${medewerker_id}"]`
-    );
-
-    if (!row) return;
-
-    const radio = row.querySelector(
-      `input[type="radio"][value="${type}"]`
-    );
-
-    if (radio) radio.checked = true;
-  });
-
-  console.log("✅ Planning toegepast:", data);
+function formatDate(date) {
+  return date.toISOString().split("T")[0];
 }
