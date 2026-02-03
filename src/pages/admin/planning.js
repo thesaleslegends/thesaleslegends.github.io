@@ -1,4 +1,4 @@
-import { supabase } from "../supabase.js";
+import { supabase } from "../../services/supabase.js";
 
 console.log("🔥 planning.js geladen", new Date().toISOString());
 
