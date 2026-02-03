@@ -28,7 +28,7 @@ async function laadWeek() {
 
   const { data, error } = await supabase
     .from("shifts")
-    .select("medewerker_id, datum, type, medewerkers(naam)")
+    .select("medewerker_id, datum, type")
     .gte("datum", weekStart)
     .lte("datum", weekEnd);
 
@@ -79,15 +79,15 @@ function renderWeek() {
 
     dagContainer.innerHTML = "";
 
-    dagShifts.forEach(shift => {
-      const el = document.createElement("div");
-      el.className = "shift";
-      el.innerHTML = `
-        ${shift.medewerkers?.naam || "Onbekend"}
-        <span class="remove" data-id="${shift.medewerker_id}" data-datum="${datum}">✖</span>
-      `;
-      dagContainer.appendChild(el);
-    });
+dagShifts.forEach(shift => {
+  const el = document.createElement("div");
+  el.className = "shift";
+  el.innerHTML = `
+    ${shift.medewerkers?.naam || "Onbekend"}
+    <span class="remove" data-id="${shift.id}">✖</span>
+  `;
+  dagContainer.appendChild(el);
+});
 
     updateDagTeller(datum, dagShifts.length);
   }
