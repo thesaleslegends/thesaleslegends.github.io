@@ -1,146 +1,125 @@
-import { supabase } from "../../services/supabase.js";
+import { supabase } from "../../supabase.js";
 
-console.log("🔥 Weekplanning geladen");
+/* ===============================
+   WEEK STATE
+================================ */
+let currentYear = 2026;
+let currentWeek = 5;
 
-// =========================
-// STATE
-// =========================
-let currentWeekStart = getMonday(new Date());
-let medewerkers = [];
-let shifts = [];
+/* ===============================
+   DOM
+================================ */
+const weekLabel = document.getElementById("weekLabel");
+const prevWeekBtn = document.getElementById("prevWeek");
+const nextWeekBtn = document.getElementById("nextWeek");
 
-// =========================
-// INIT
-// =========================
-document.addEventListener("DOMContentLoaded", async () => {
-  await laadMedewerkers();
-  await laadWeek();
-});
+/* ===============================
+   INIT
+================================ */
+updateWeekLabel();
+loadWeek();
 
-// =========================
-// WEEK LADEN
-// =========================
-async function laadWeek() {
-  const weekStart = formatDate(currentWeekStart);
-  const weekEnd = formatDate(addDays(currentWeekStart, 6));
+/* ===============================
+   WEEK NAVIGATIE
+================================ */
+prevWeekBtn.onclick = () => {
+  currentWeek--;
+  if (currentWeek < 1) {
+    currentWeek = 52;
+    currentYear--;
+  }
+  updateWeekLabel();
+  loadWeek();
+};
 
-  console.log("📅 Week laden:", weekStart, "t/m", weekEnd);
+nextWeekBtn.onclick = () => {
+  currentWeek++;
+  if (currentWeek > 52) {
+    currentWeek = 1;
+    currentYear++;
+  }
+  updateWeekLabel();
+  loadWeek();
+};
 
-  const { data, error } = await supabase
-    .from("shifts")
-    .select("medewerker_id, datum, type")
-    .gte("datum", weekStart)
-    .lte("datum", weekEnd);
+function updateWeekLabel() {
+  weekLabel.innerText = `Week ${currentWeek} (${currentYear})`;
+}
+
+/* ===============================
+   DATA LADEN
+================================ */
+async function loadWeek() {
+  // kolommen leegmaken
+  document.querySelectorAll(".day-list").forEach(l => (l.innerHTML = ""));
+  document.querySelectorAll(".summary-cell").forEach(c => (c.innerText = "0"));
+  document.getElementById("weekTotal").innerText = "0";
+
+  const { data: shifts, error } = await supabase
+    .from("planning")
+    .select(`
+      id,
+      day_of_week,
+      half_day,
+      employees ( name )
+    `)
+    .eq("year", currentYear)
+    .eq("week_number", currentWeek);
 
   if (error) {
-    console.error("❌ Fout bij laden shifts:", error);
+    console.error("Fout bij laden planning:", error);
     return;
   }
 
-  shifts = data || [];
-  renderWeek();
+  renderWeek(shifts);
+  calculateTotals(shifts);
 }
 
-// =========================
-// MEDEWERKERS LADEN
-// =========================
-async function laadMedewerkers() {
-  const { data, error } = await supabase
-    .from("medewerkers")
-    .select("id, naam")
-    .eq("actief", true)
-    .order("naam");
-
-  if (error) {
-    console.error("❌ Fout bij laden medewerkers:", error);
-    return;
-  }
-
-  medewerkers = data || [];
-}
-
-// =========================
-// RENDER WEEK
-// =========================
-function renderWeek() {
-  let totaal = 0;
-
-  for (let i = 0; i < 7; i++) {
-    const dag = addDays(currentWeekStart, i);
-    const datum = formatDate(dag);
-    const dagContainer = document.querySelector(
-      `[data-datum="${datum}"]`
+/* ===============================
+   RENDEREN
+================================ */
+function renderWeek(shifts) {
+  shifts.forEach(shift => {
+    const list = document.querySelector(
+      `.day-column[data-day="${shift.day_of_week}"] .day-list`
     );
+    if (!list) return;
 
-    if (!dagContainer) continue;
+    const li = document.createElement("li");
+    li.textContent =
+      shift.employees?.name + (shift.half_day ? " (½)" : "");
 
-    const dagShifts = shifts.filter(s => s.datum === datum);
-    totaal += dagShifts.length;
-
-    dagContainer.innerHTML = "";
-
-dagShifts.forEach(shift => {
-  const el = document.createElement("div");
-  el.className = "shift";
-  el.innerHTML = `
-    ${shift.medewerkers?.naam || "Onbekend"}
-    <span class="remove" data-id="${shift.id}">✖</span>
-  `;
-  dagContainer.appendChild(el);
-});
-
-    updateDagTeller(datum, dagShifts.length);
-  }
-
-  document.getElementById("weekTotal").innerText = totaal;
-  bindRemoveEvents();
-}
-
-// =========================
-// REMOVE SHIFT
-// =========================
-function bindRemoveEvents() {
-  document.querySelectorAll(".remove").forEach(btn => {
-    btn.addEventListener("click", async e => {
-      const medewerkerId = e.target.dataset.id;
-      const datum = e.target.dataset.datum;
-
-      await supabase
-        .from("shifts")
-        .delete()
-        .eq("medewerker_id", medewerkerId)
-        .eq("datum", datum);
-
-      await laadWeek();
-    });
+    list.appendChild(li);
   });
 }
 
-// =========================
-// HELPERS
-// =========================
-function updateDagTeller(datum, aantal) {
-  const teller = document.querySelector(
-    `[data-teller="${datum}"]`
-  );
-  if (teller) teller.innerText = aantal;
+/* ===============================
+   TOTALEN
+================================ */
+function calculateTotals(shifts) {
+  const dagTotalen = { 1:0,2:0,3:0,4:0,5:0,6:0,7:0 };
+
+  shifts.forEach(s => {
+    dagTotalen[s.day_of_week] += s.half_day ? 0.5 : 1;
+  });
+
+  document.querySelectorAll(".summary-cell").forEach((cell, i) => {
+    cell.innerText = dagTotalen[i + 1];
+  });
+
+  const weekTotaal = Object.values(dagTotalen)
+    .reduce((a, b) => a + b, 0);
+
+  document.getElementById("weekTotal").innerText = weekTotaal;
 }
 
-function getMonday(date) {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  d.setDate(diff);
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
+/* ===============================
+   KNOPPEN ONDERAAN
+================================ */
+document.getElementById("openPlanner").onclick = () => {
+  window.location.href = "/planning-admin.html";
+};
 
-function addDays(date, days) {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
-}
-
-function formatDate(date) {
-  return date.toISOString().split("T")[0];
-}
+document.getElementById("openVisual").onclick = () => {
+  window.location.href = "/planning-visual.html";
+};
