@@ -5,6 +5,7 @@ import { supabase } from "../../services/supabase.js";
 ================================ */
 let currentYear = 2026;
 let currentWeek = 5;
+let activeDay = null;
 
 /* ===============================
    DOM
@@ -13,11 +14,18 @@ const weekLabel = document.getElementById("weekLabel");
 const prevWeekBtn = document.getElementById("prevWeek");
 const nextWeekBtn = document.getElementById("nextWeek");
 
+const modal = document.getElementById("planModal");
+const employeeSelect = document.getElementById("employeeSelect");
+const halfDayCheckbox = document.getElementById("halfDayCheckbox");
+const saveShiftBtn = document.getElementById("saveShift");
+const closeModalBtn = document.getElementById("closeModal");
+
 /* ===============================
    INIT
 ================================ */
 updateWeekLabel();
 loadWeek();
+loadEmployees();
 
 /* ===============================
    WEEK NAVIGATIE
@@ -47,12 +55,34 @@ function updateWeekLabel() {
 }
 
 /* ===============================
-   DATA LADEN
+   MEDEWERKERS LADEN
+================================ */
+async function loadEmployees() {
+  const { data, error } = await supabase
+    .from("employees")
+    .select("id, name")
+    .order("name");
+
+  if (error) {
+    console.error("Fout bij laden medewerkers:", error);
+    return;
+  }
+
+  employeeSelect.innerHTML = "";
+  data.forEach(emp => {
+    const opt = document.createElement("option");
+    opt.value = emp.id;
+    opt.textContent = emp.name;
+    employeeSelect.appendChild(opt);
+  });
+}
+
+/* ===============================
+   WEEK LADEN
 ================================ */
 async function loadWeek() {
-  // kolommen leegmaken
-  document.querySelectorAll(".day-list").forEach(l => (l.innerHTML = ""));
-  document.querySelectorAll(".summary-cell").forEach(c => (c.innerText = "0"));
+  document.querySelectorAll(".day-list").forEach(l => l.innerHTML = "");
+  document.querySelectorAll(".summary-cell").forEach(c => c.innerText = "0");
   document.getElementById("weekTotal").innerText = "0";
 
   const { data: shifts, error } = await supabase
@@ -97,29 +127,58 @@ function renderWeek(shifts) {
    TOTALEN
 ================================ */
 function calculateTotals(shifts) {
-  const dagTotalen = { 1:0,2:0,3:0,4:0,5:0,6:0,7:0 };
+  const totals = {1:0,2:0,3:0,4:0,5:0,6:0,7:0};
 
   shifts.forEach(s => {
-    dagTotalen[s.day_of_week] += s.half_day ? 0.5 : 1;
+    totals[s.day_of_week] += s.half_day ? 0.5 : 1;
   });
 
-  document.querySelectorAll(".summary-cell").forEach((cell, i) => {
-    cell.innerText = dagTotalen[i + 1];
+  document.querySelectorAll(".summary-cell").forEach((c, i) => {
+    c.innerText = totals[i + 1];
   });
 
-  const weekTotaal = Object.values(dagTotalen)
-    .reduce((a, b) => a + b, 0);
-
-  document.getElementById("weekTotal").innerText = weekTotaal;
+  document.getElementById("weekTotal").innerText =
+    Object.values(totals).reduce((a,b)=>a+b,0);
 }
 
 /* ===============================
-   KNOPPEN ONDERAAN
+   PLUSJE → MODAL
 ================================ */
-document.getElementById("openPlanner").onclick = () => {
-  window.location.href = "/planning-admin.html";
+document.querySelectorAll(".add-btn").forEach(btn => {
+  btn.onclick = () => {
+    activeDay = btn.closest(".day-column").dataset.day;
+    modal.style.display = "flex";
+  };
+});
+
+closeModalBtn.onclick = () => {
+  modal.style.display = "none";
+  activeDay = null;
 };
 
-document.getElementById("openVisual").onclick = () => {
-  window.location.href = "/planning-visual.html";
+/* ===============================
+   OPSLAAN SHIFT
+================================ */
+saveShiftBtn.onclick = async () => {
+  if (!activeDay) return;
+
+  const { error } = await supabase
+    .from("planning")
+    .insert({
+      year: currentYear,
+      week_number: currentWeek,
+      day_of_week: Number(activeDay),
+      employee_id: employeeSelect.value,
+      half_day: halfDayCheckbox.checked
+    });
+
+  if (error) {
+    alert("Fout bij opslaan");
+    console.error(error);
+    return;
+  }
+
+  modal.style.display = "none";
+  halfDayCheckbox.checked = false;
+  loadWeek();
 };
