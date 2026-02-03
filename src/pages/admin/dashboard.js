@@ -12,28 +12,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   // hier komt later je dashboard-logica
 });
 
-  // 👥 Medewerkers
-  document.getElementById("medewerkers")?.addEventListener("click", () => {
-    window.location.href = "../medewerkers/medewerkers.html";
-  });
-
   // 📅 Dag invoer
   document.getElementById("daginvoer")?.addEventListener("click", () => {
     window.location.href = "../daginvoer/dag.html";
   });
 
-  // 🗓 Planning
+  // 🗓 Planning (FIX)
   document.getElementById("planning")?.addEventListener("click", () => {
-    window.location.href = "../planning/planning.html";
+    window.location.href = "./planning.html";
   });
 
-  // 🏆 Leaderboard
+  // 🏆 Leaderboard (check waar hij staat)
   document.getElementById("leaderboard")?.addEventListener("click", () => {
-    window.location.href = "../leaderboard/leaderboard.html";
+    window.location.href = "./leaderboard.html";
+  });
+
+  // 💰 Financieel
+  document.getElementById("financieel")?.addEventListener("click", () => {
+    window.location.href = "./financieel.html";
   });
 
   // 🚪 Uitloggen
   document.getElementById("logout")?.addEventListener("click", async () => {
     await supabase.auth.signOut();
-    window.location.href = "../auth/login.html";
+    window.location.href = "/index.html";
   });
+

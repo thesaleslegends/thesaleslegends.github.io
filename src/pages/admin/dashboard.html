@@ -2,26 +2,38 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Dashboard</title>
+  <title>Backend dashboard</title>
 </head>
+
+
+
 <body>
+  <h2>Backend</h2>
 
-  <header>
-    <h1>Backend Dashboard</h1>
-  </header>
 
-  <main>
-    <section id="stats">
-      <h2>Overzicht</h2>
-      <p>Dashboard is geladen</p>
-    </section>
 
-    <section id="navigation">
-      <button id="financeBtn">Financieel</button>
-      <button id="employeesBtn">Medewerkers</button>
-      <button id="planningBtn">Planning</button>
-    </section>
-  </main>
+  <table border="1" cellpadding="10">
+  <tr>
+    <td><button id="medewerkers">👥 Medewerkers</button></td>
+  </tr>
+
+  <tr>
+    <td><button id="daginvoer">📅 Dag invoer</button></td>
+  </tr>
+
+  <tr>
+    <td><button id="planning">🗓 Planning</button></td>
+  </tr>
+
+  <!-- ✅ NIEUW -->
+  <tr>
+    <td><button id="leaderboard">🏆 Leaderboard</button></td>
+  </tr>
+
+  <tr>
+    <td><button id="logout">🚪 Uitloggen</button></td>
+  </tr>
+</table>
 
   <script type="module" src="./dashboard.js"></script>
 </body>
