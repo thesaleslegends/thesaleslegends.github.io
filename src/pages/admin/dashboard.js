@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 👥 Medewerkers
   document.getElementById("medewerkers")?.addEventListener("click", () => {
     window.location.href = "../medewerkers/medewerkers.html";
-  });s
+  });
 
   // 📅 Dag invoer
   document.getElementById("daginvoer")?.addEventListener("click", () => {
