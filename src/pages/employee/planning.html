@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Planning – Backend</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      background: #fff;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>📅 Planning (backend)</h2>
+
+  <label>
+    Datum:
+    <input type="date" id="planningDatum">
+  </label>
+
+  <hr>
+
+  <!-- Dynamisch gerenderde medewerkers -->
+  <div id="medewerkersContainer"></div>
+
+  <button id="opslaanPlanning">Opslaan planning</button>
+
+  <script type="module" src="./js/planning.js"></script>
+</body>
+</html>
