@@ -1,5 +1,7 @@
-import { requireAuth } from "../../utils/guards.js";
+import requireAuth from "../../utils/guards.js";
 import { supabase } from "../../services/supabase.js";
+
+console.log("🔥 ADMIN dashboard.js actief");
 
 document.addEventListener("DOMContentLoaded", async () => {
   // 🔐 Beveiliging
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 👥 Medewerkers
   document.getElementById("medewerkers")?.addEventListener("click", () => {
     window.location.href = "../medewerkers/medewerkers.html";
-  });
+  });s
 
   // 📅 Dag invoer
   document.getElementById("daginvoer")?.addEventListener("click", () => {
