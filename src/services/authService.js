@@ -17,4 +17,3 @@ export async function login(email, password) {
   return { user: data.user };
 }
 
-console.log("AUTH SERVICE LOADED", { login });
