@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Leaderboard</title>
+
+  <link rel="stylesheet" href="../../assets/styles/leaderboard.css">
+  <script type="module" src="./leaderboard.js"></script>
+</head>
+
+<body>
+
+  <!-- ACHTERGROND -->
+  <div class="background"></div>
+
+  <!-- PAGINA -->
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="leaderboard-header">
+      <div class="period-selector">
+        <button class="period-btn" id="periodToggle">
+          Periode <span class="arrow">▾</span>
+        </button>
+
+        <div class="period-menu" id="periodMenu">
+          <button data-period="week">Week</button>
+          <button data-period="month">Maand</button>
+          <button data-period="year">Jaar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-title">THE SALES LEGENDS</div>
+      <div class="hero-subtitle" id="leaderboardSubtitle">
+        WEEKLY LEADERBOARD
+      </div>
+    </div>
+
+    <!-- STATS BLOKKEN -->
+    <div class="stats-container">
+
+      <!-- LINKS -->
+      <div class="stats-left">
+        <h3>Top performer</h3>
+        <p><strong id="top-naam">–</strong></p>
+
+        <h3>Bruto gemiddelde</h3>
+        <p id="top-bruto-gem">–</p>
+
+        <h3>Netto gemiddelde</h3>
+        <p id="top-netto-gem">–</p>
+      </div>
+
+      <!-- RECHTS -->
+      <div class="stats-right">
+        <h3>Bruto afspraken</h3>
+        <p id="totaal-bruto">–</p>
+
+        <h3>Netto afspraken</h3>
+        <p id="totaal-netto">–</p>
+
+        <h3>Team gemiddelde</h3>
+        <p id="team-gem">–</p>
+      </div>
+
+    </div>
+
+    <!-- LEADERBOARD TABEL -->
+    <table class="leaderboard">
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Shifts</th>
+          <th>Aantal bruto</th>
+          <th>Bruto gemiddelde</th>
+          <th>Aantal netto</th>
+          <th>Netto gemiddelde</th>
+        </tr>
+      </thead>
+
+      <tbody id="leaderboardBody">
+        <!-- Wordt gevuld door JS -->
+      </tbody>
+    </table>
+
+  </div>
+
+</body>
+</html>

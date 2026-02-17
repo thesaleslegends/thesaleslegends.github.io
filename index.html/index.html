@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TSL – Login</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+  <main class="login-wrapper">
+
+    <!-- Logo -->
+    <div class="logo-container">
+      <img src="/src/assets/images/tsl-logo.png" alt="The Sales Legends logo">
+    </div>
+
+    <!-- Login Card -->
+    <section class="login-card">
+
+      <form id="loginForm" novalidate>
+
+        <!-- Email -->
+        <div class="input-group">
+          <span class="icon">👤</span>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <!-- Wachtwoord -->
+        <div class="input-group">
+          <span class="icon">🔒</span>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Wachtwoord"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <!-- Button -->
+        <button type="submit" id="loginBtn" class="login-btn">
+          LOG IN
+        </button>
+
+        <!-- Error -->
+        <p id="loginError" class="error"></p>
+
+        
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <!-- Script -->
+  <script type="module" src="./index.js"></script>
+
+</body>
+</html>

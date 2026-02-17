@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijn Dashboard</title>
+
+  <link rel="stylesheet" href="/src/assets/styles/dashboard.medewerker.css" />
+</head>
+
+<body>
+<!-- TOP NAV -->
+<header class="topbar">
+
+  <!-- Dropdown -->
+  <div class="topbar-left">
+    <div class="dropdown">
+      <button class="dropdown-btn">Menu ▾</button>
+      <div class="dropdown-content">
+        <a href="/src/pages/employee/vaste-dagenoverzicht.html">
+          Jouw vaste dagen
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logo midden -->
+  <div class="topbar-center">
+    <img 
+      src="/src/assets/images/tsl-logo.png" 
+      alt="TSL Logo"
+      class="topbar-logo"
+    />
+  </div>
+
+  <!-- Rechts leeg (voor balans of future icons) -->
+  <div class="topbar-right"></div>
+
+</header>
+
+  <main class="dashboard">
+
+    <!-- Header -->
+    <section class="header">
+
+      <h1 id="medewerkerNaamTitel">
+        Hey <span id="medewerkerNaam">Medewerker</span>
+      </h1>
+
+      <!-- FUNCTIE BLOK -->
+      <div class="functie-container">
+
+        <!-- Badge -->
+        <img 
+          id="functieEmbleem"
+          class="functie-embleem"
+          src=""
+          alt="Functie badge"
+        />
+
+        <!-- Functie naam -->
+        <span id="medewerkerFunctie" class="functie-tekst">
+          Functie
+        </span>
+
+      </div>
+
+    </section>
+
+    <!-- Verdiensten -->
+    <section class="card">
+      <h2>Jouw verdiensten</h2>
+
+      <div class="earnings">
+        <div class="earning">
+          <span class="label">Deze week</span>
+          <span class="amount" id="weekVerdiensten">€0</span>
+        </div>
+
+        <div class="earning">
+          <span class="label">Deze maand</span>
+          <span class="amount" id="maandVerdiensten">€0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resultaten -->
+<section class="card">
+  <h2>Jouw resultaat</h2>
+
+  <div class="resultaten">
+
+    <div class="result-item">
+      <span class="result-label">Hoogste netto score</span>
+      <span class="result-value" id="hoogsteNetto">0</span>
+    </div>
+
+    <div class="result-item">
+      <span class="result-label">Hoogste bruto score</span>
+      <span class="result-value" id="hoogsteBruto">0</span>
+    </div>
+
+    <div class="result-item">
+      <span class="result-label">Netto gemiddelde</span>
+      <span class="result-value" id="nettoGemiddelde">0</span>
+    </div>
+
+  </div>
+</section>
+
+    <!-- Planning -->
+    <section class="card">
+      <h2>Jij bent ingepland voor</h2>
+      <div id="planningLijst" class="planning"></div>
+    </section>
+
+    <!-- Leaderboard knop -->
+    <section class="card">
+      <button id="leaderboardBtn" class="leaderboard-btn">
+        Bekijk leaderboard →
+      </button>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/pages/employee/dashboard.js"></script>
+
+</body>
+</html>

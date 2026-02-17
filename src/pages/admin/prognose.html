@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prognose instellingen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/src/assets/styles/medewerkers.css" />
+
+  <script
+    type="module"
+    src="/src/pages/admin/prognose.js"
+    defer
+  ></script>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="page-header">
+      <h1>📈 Prognose instellingen</h1>
+      <p>Bonus: <strong>€10 per netto order</strong> als prognose is behaald</p>
+    </header>
+
+    <section class="section-box">
+      <table class="finance-table">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Prognose behaald</th>
+          </tr>
+        </thead>
+        <tbody id="prognoseBody">
+          <!-- JS vult dit -->
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,3 +1,5 @@
+
+
 import { supabase } from "../../services/supabase.js";
 
 /* =========================
@@ -85,7 +87,17 @@ async function laadDag(datum) {
   }
 
   dagHeeftPlanning = true;
-  ingeplandeMedewerkers = planning.map(p => p.medewerkers);
+
+// Maak unieke medewerkers op basis van employee_id
+const uniekeMap = new Map();
+
+planning.forEach(p => {
+  if (p.medewerkers && p.employee_id) {
+    uniekeMap.set(p.employee_id, p.medewerkers);
+  }
+});
+
+ingeplandeMedewerkers = Array.from(uniekeMap.values());
 
   /* === BESTAANDE DAG_INVOER === */
   const { data: dagInvoer, error: dagError } = await supabase

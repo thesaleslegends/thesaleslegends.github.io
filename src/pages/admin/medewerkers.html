@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Medewerkers (backend)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- STYLES -->
+  <link rel="stylesheet" href="/src/assets/styles/medewerkers.css" />
+
+  <!-- SCRIPT -->
+  <script
+    type="module"
+    src="/src/pages/admin/medewerkers.js"
+    defer
+  ></script>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!-- ===============================
+         HEADER
+    ================================ -->
+    <header class="page-header">
+      <h1>👥 Medewerkers (backend)</h1>
+    </header>
+
+    <!-- ===============================
+         ACTIEVE MEDEWERKERS
+    ================================ -->
+    <section class="section-box">
+      <h2>Actieve medewerkers</h2>
+
+      <!-- JS rendert hier de actieve medewerkers -->
+      <div id="medewerkersLijst"></div>
+    </section>
+
+    <!-- ===============================
+         INACTIEVE MEDEWERKERS
+    ================================ -->
+    <section class="section-box">
+      <h2>Inactieve medewerkers</h2>
+
+      <div class="form-row">
+        <select id="inactiveSelect">
+          <option value="">Selecteer medewerker</option>
+        </select>
+
+        <button id="activateBtn" class="primary">
+          Activeer medewerker
+        </button>
+      </div>
+    </section>
+
+    <!-- ===============================
+         NIEUWE MEDEWERKER
+    ================================ -->
+    <section class="section-box">
+      <h2>Nieuwe medewerker toevoegen</h2>
+
+      <button id="openAddModal" class="primary">
+        + Medewerker toevoegen
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ===============================
+       MODAL / POPUP
+  ================================ -->
+  <div id="addMedewerkerModal" class="modal hidden">
+    <div class="modal-content">
+
+      <h3>Nieuwe medewerker</h3>
+
+      <div class="form-row">
+        <label>
+          Naam<br />
+          <input
+            type="text"
+            id="nieuweNaam"
+            placeholder="Naam medewerker"
+            autocomplete="off"
+          />
+        </label>
+
+        <label>
+          Geboortedatum<br />
+          <input
+            type="date"
+            id="nieuweGeboortedatum"
+          />
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button id="cancelAdd" class="secondary">
+          Annuleren
+        </button>
+
+        <button id="saveAdd" class="primary">
+          Toevoegen
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

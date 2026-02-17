@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Financieel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/src/assets/styles/medewerkers.css" />
+  <script type="module" src="/src/pages/admin/finance.js" defer></script>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <h1>💰 Financieel overzicht</h1>
+  </header>
+
+  <!-- SCHAKELAAR + FILTERS -->
+  <section class="section-box">
+    <div class="form-row" style="gap:12px; align-items:center; flex-wrap:wrap;">
+
+      <!-- VIEW -->
+      <button id="btnTeam" class="primary">Hele team</button>
+      <button id="btnMedewerker" class="secondary">Medewerker</button>
+
+      <select id="medewerkerSelect" style="display:none"></select>
+
+      <!-- FILTER DROPDOWN -->
+      <div class="filter-wrapper" style="position:relative;">
+        <button id="btnFilter" class="secondary">
+          Filters ▾
+        </button>
+
+        <div
+          id="filterDropdown"
+          class="filter-dropdown"
+          style="
+            display:none;
+            position:absolute;
+            top:110%;
+            right:0;
+            background:#fff;
+            border:1px solid #ddd;
+            padding:10px 12px;
+            border-radius:6px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.08);
+            min-width:220px;
+            z-index:10;
+          "
+        >
+          <label style="display:flex; gap:8px; align-items:center;">
+            <input type="checkbox" id="filterPrognose" checked />
+            Prognose tonen
+          </label>
+
+          <label style="display:flex; gap:8px; align-items:center; margin-top:6px;">
+            <input type="checkbox" id="filterVasteLasten" checked />
+            Vaste lasten tonen
+          </label>
+
+          <label style="display:flex; gap:8px; align-items:center; margin-top:6px;">
+            <input type="checkbox" id="filterOffertes" checked />
+            Offertes tonen
+          </label>
+
+          <label style="display:flex; gap:8px; align-items:center; margin-top:6px;">
+            <input type="checkbox" id="filterVariabeleKosten" checked />
+            Variabele kosten tonen
+          </label>
+        </div>
+      </div>
+
+      <!-- PERIODE FILTER -->
+      <select id="periodeSelect" class="secondary">
+        <option value="dag">Dag</option>
+        <option value="week" selected>Week</option>
+        <option value="maand">Maand</option>
+        <option value="jaar">Jaar</option>
+        <option value="custom">Eigen keuze</option>
+      </select>
+
+      <input
+        type="date"
+        id="startDatum"
+        style="display:none"
+      />
+
+      <input
+        type="date"
+        id="eindDatum"
+        style="display:none"
+      />
+
+    </div>
+  </section>
+
+  <!-- TABEL -->
+  <section class="section-box">
+    <table class="finance-table">
+      <thead>
+        <tr>
+          <th>Medewerker</th>
+          <th>Omzet</th>
+          <th>Prognose</th>
+          <th>Offertes</th>
+          <th>Loon excl.</th>
+          <th>Loon incl.</th>
+          <th>Vaste lasten</th>
+          <th>Variabele kosten</th>
+          <th>Netto resultaat</th>
+        </tr>
+      </thead>
+
+      <tbody id="financeBody">
+        <!-- JS vult alles, inclusief totaal -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- INSTELLINGEN -->
+  <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+
+    <button
+      class="primary"
+      onclick="window.location.href='/src/pages/admin/prognose.html'"
+    >
+      📈 Prognose instellingen
+    </button>
+
+    <button
+      class="secondary"
+      onclick="window.location.href='/src/pages/admin/vaste-lasten.html'"
+    >
+      🧾 Vaste lasten instellingen
+    </button>
+
+    <button
+      class="secondary"
+      onclick="window.location.href='/src/pages/admin/getekende-offertes.html'"
+    >
+      ✍️ Getekende offertes
+    </button>
+
+    <button
+      class="secondary"
+      onclick="window.location.href='/src/pages/admin/variabele-kosten.html'"
+    >
+      🔁 Variabele kosten
+    </button>
+
+  </div>
+
+</main>
+</body>
+</html>

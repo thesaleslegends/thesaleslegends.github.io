@@ -1,0 +1,142 @@
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(10, 10, 14, 0.55) 0%,
+      rgba(10, 10, 14, 0.75) 65%,
+      rgba(10, 10, 14, 0.9) 100%
+    ),
+    url("/src/assets/images/index.png") center / cover no-repeat;
+}
+
+/* =========================
+   WRAPPER
+========================= */
+.login-wrapper {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+}
+
+/* =========================
+   LOGO
+========================= */
+.logo-container {
+  text-align: center;
+}
+
+.logo-container img {
+  width: 550px;
+  max-width: 100%;
+  filter: drop-shadow(0 0 22px rgba(255, 50, 50, 0.7));
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+.login-card {
+  background: rgba(15, 15, 20, 0.6);
+  border-radius: 22px;
+  padding: 26px;
+  backdrop-filter: blur(6px);
+
+  box-shadow:
+    0 0 0 1.5px rgba(255, 80, 80, 0.6),
+    0 0 28px rgba(255, 60, 60, 0.35),
+    inset 0 0 24px rgba(255, 80, 80, 0.06);
+}
+
+/* =========================
+   INPUTS
+========================= */
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+
+  box-shadow:
+    inset 0 0 14px rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.input-group input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.icon {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+.login-btn {
+  width: 100%;
+  margin-top: 6px;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+
+  background: linear-gradient(135deg, #ff2e2e, #ff6b6b);
+  color: #fff;
+
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 90, 90, 0.6),
+    0 12px 30px rgba(255, 50, 50, 0.45);
+
+  transition: transform 0.15s ease;
+}
+
+.login-btn:active {
+  transform: scale(0.97);
+}
+
+/* =========================
+   FORGOT LINK
+========================= */
+.forgot {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}

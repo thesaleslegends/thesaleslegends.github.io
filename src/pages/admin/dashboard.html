@@ -3,41 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <title>Backend dashboard</title>
+  <link rel="stylesheet" href="../../assets/styles/dashboard.css">
 </head>
 
-
-
 <body>
+
   <h2>Backend</h2>
 
-
-
+  <!-- =====================
+       MENU
+  ====================== -->
   <table border="1" cellpadding="10">
-  <tr>
-    <td><button id="medewerkers">👥 Medewerkers</button></td>
-  </tr>
+    <tr>
+      <td><button id="medewerkers">👥 Medewerkers</button></td>
+    </tr>
+    <tr>
+      <td><button id="daginvoer">📅 Dag invoer</button></td>
+    </tr>
+    <tr>
+      <td><button id="planning">🗓 Planning</button></td>
+    </tr>
+    <tr>
+      <td><button id="financieel">🤑 Financieel</button></td>
+    </tr>
+    <tr>
+      <td><button id="leaderboard">🏆 Leaderboard</button></td>
+    </tr>
+    <tr>
+      <td><button id="logout">🚪 Uitloggen</button></td>
+    </tr>
+  </table>
 
-  <tr>
-    <td><button id="daginvoer">📅 Dag invoer</button></td>
-  </tr>
+  <hr>
 
-  <tr>
-    <td><button id="planning">🗓 Planning</button></td>
-  </tr>
+  <!-- =====================
+       DASHBOARD OVERZICHT
+  ====================== -->
 
-  <tr>
-    <td><button id="finance">🤑 Financieel</button></td>
-  </tr>
+  <h3>Dashboard overzicht</h3>
 
-  <!-- ✅ NIEUW -->
-  <tr>
-    <td><button id="leaderboard">🏆 Leaderboard</button></td>
-  </tr>
+  <!-- Periode selector -->
+  <label><strong>Periode:</strong></label>
+  <select id="dashboardPeriode">
+    <option value="dag">Dag</option>
+    <option value="week" selected>Week</option>
+    <option value="maand">Maand</option>
+    <option value="jaar">Jaar</option>
+  </select>
 
-  <tr>
-    <td><button id="logout">🚪 Uitloggen</button></td>
-  </tr>
-</table>
+  <br><br>
+
+  <!-- =====================
+       TEAM
+  ====================== -->
+  <h4>👥 Team</h4>
+  <table border="1" cellpadding="8">
+    <tr>
+      <td>Actieve medewerkers</td>
+      <td id="kpiActief">–</td>
+    </tr>
+    <tr>
+      <td>SPW team</td>
+      <td id="kpiSPW">–</td>
+    </tr>
+    <tr>
+      <td>Aantal shifts</td>
+      <td id="kpiShifts">–</td>
+    </tr>
+  </table>
+
+  <br>
+
+  <!-- =====================
+       SALES
+  ====================== -->
+  <h4>📦 Sales</h4>
+  <table border="1" cellpadding="8">
+    <tr>
+      <td>Bruto orders</td>
+      <td id="kpiBruto">–</td>
+    </tr>
+    <tr>
+      <td>Netto orders</td>
+      <td id="kpiNetto">–</td>
+    </tr>
+    <tr>
+      <td>Bruto gemiddelde</td>
+      <td id="kpiBrutoGem">–</td>
+    </tr>
+    <tr>
+      <td>Netto gemiddelde</td>
+      <td id="kpiNettoGem">–</td>
+    </tr>
+    <tr>
+      <td>Afval percentage</td>
+      <td id="kpiAfval">–</td>
+    </tr>
+  </table>
+
+  <br>
+
+  <!-- =====================
+       RESULTAAT
+  ====================== -->
+  <h4>💰 Resultaat</h4>
+  <table border="1" cellpadding="8">
+    <tr>
+      <td>Omzet</td>
+      <td id="kpiOmzet">–</td>
+    </tr>
+    <tr>
+      <td>Kosten</td>
+      <td id="kpiKosten">–</td>
+    </tr>
+    <tr>
+      <td><strong>Winst / Verlies</strong></td>
+      <td id="kpiWinst">–</td>
+    </tr>
+  </table>
 
   <script type="module" src="./dashboard.js"></script>
 </body>

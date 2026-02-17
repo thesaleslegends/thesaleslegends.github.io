@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Variabele kosten</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+ <link rel="stylesheet" href="/src/assets/styles/medewerkers.css" />
+
+  <!-- ⚠️ BELANGRIJK: DEFER + TYPE MODULE -->
+  <script type="module" src="./variabele-kosten.js" defer></script>
+</head>
+
+<body>
+
+<h1>Variabele kosten</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bedrag</th>
+      <th>Omschrijving</th>
+      <th>Datum</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="variabeleKostenBody">
+    <!-- JS vult dit -->
+  </tbody>
+</table>
+
+<br>
+
+<button id="btnAddRow">➕ Regel toevoegen</button>
+
+</body>
+</html>

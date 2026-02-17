@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Medewerker – Detail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Styles (optioneel, pas aan indien nodig) -->
+ <link rel="stylesheet" href="/src/assets/styles/medewerkers-detailpagina.css">
+</head>
+<body>
+
+  <main class="page">
+
+    <!-- ===============================
+         HEADER
+    ================================ -->
+    <header class="page-header">
+      <h1 id="medewerkerNaam">Medewerker</h1>
+      <p class="subtitle">Persoonlijke gegevens & prestaties</p>
+    </header>
+
+    <!-- ===============================
+         BASISGEGEVENS
+    ================================ -->
+    <section class="card">
+      <h2>Basisgegevens</h2>
+
+      <div class="info-grid">
+
+        <div class="info-row">
+          <span class="label">Leeftijd</span>
+          <span class="value" id="medewerkerLeeftijd">–</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Functie</span>
+          <span class="value" id="medewerkerFunctie">–</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Status</span>
+          <span class="value" id="medewerkerStatus">–</span>
+        </div>
+
+        <div class="info-row highlight">
+          <span class="label">Netto gemiddelde</span>
+          <span class="value" id="nettoGemiddelde">–</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">SPW</span>
+          <span class="value" id="spw">–</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===============================
+         ACTIES
+    ================================ -->
+    <section class="actions">
+      <button id="terugBtn" class="secondary-btn">
+        ← Terug naar medewerkers
+      </button>
+    </section>
+
+  </main>
+
+  <!-- JS -->
+  <script type="module" src="/src/pages/admin/medewerker-detailpagina.js"></script>
+
+</body>
+</html>

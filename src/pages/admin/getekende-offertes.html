@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Getekende offertes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/src/assets/styles/medewerkers.css" />
+
+  <!-- JS -->
+  <script
+    type="module"
+    src="/src/pages/admin/getekende-offertes.js"
+    defer
+  ></script>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <h1>✍️ Getekende offertes</h1>
+    <p style="margin-top:6px; color:#666;">
+      Overzicht van getekende offertes per medewerker
+    </p>
+  </header>
+
+  <!-- TABEL -->
+  <section class="section-box">
+    <table class="finance-table">
+      <thead>
+        <tr>
+          <th>Medewerker</th>
+          <th>Klant</th>
+          <th style="text-align:right;">Offerte waarde (€)</th>
+          <th>Datum</th>
+          <th style="width:60px;"></th>
+        </tr>
+      </thead>
+
+      <tbody id="offertesBody">
+        <!-- JS vult dit -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ACTIES -->
+  <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+
+    <button id="addOfferte" class="secondary">
+      ➕ Regel toevoegen
+    </button>
+
+    <button
+      class="primary"
+      onclick="window.location.href='/src/pages/admin/finance.html'"
+    >
+      ← Terug naar financieel
+    </button>
+
+  </div>
+
+</main>
+</body>
+</html>

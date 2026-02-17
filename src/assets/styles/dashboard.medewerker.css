@@ -1,0 +1,411 @@
+/* ======================================================
+   RESET & BASIS
+====================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(10, 10, 14, 0.55) 0%,
+      rgba(10, 10, 14, 0.75) 65%,
+      rgba(10, 10, 14, 0.9) 100%
+    ),
+    url("/src/assets/images/index.png") center / cover no-repeat fixed;
+}
+
+/* ======================================================
+   TOPBAR
+====================================================== */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  height: 72px;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(15, 15, 20, 0.9);
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.65),
+    inset 0 -1px 0 rgba(255,90,90,0.2);
+}
+
+.topbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.topbar-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(255, 90, 90, 0.7));
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.dropdown {
+  position: relative;
+}
+
+/* Button */
+.dropdown-btn {
+  background: none;
+  border: none;
+  color: #ff8b8b;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.dropdown-btn:hover {
+  background: rgba(255, 90, 90, 0.12);
+}
+
+.dropdown-btn:active {
+  transform: scale(0.96);
+}
+
+/* Menu */
+.dropdown-content {
+  position: absolute;
+  top: 48px;
+  left: 0;
+
+  min-width: 220px;
+  padding: 10px;
+
+  border-radius: 16px;
+
+  background: rgba(20, 20, 25, 0.98);
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,90,90,0.2);
+
+  display: none; /* standaard dicht */
+  z-index: 2000;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* 👇 DIT IS DE BELANGRIJKE */
+.dropdown.open .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Links */
+.dropdown-content a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.dropdown-content a:hover {
+  background: rgba(255,90,90,0.15);
+}
+
+/* ======================================================
+   LAYOUT
+====================================================== */
+
+.dashboard {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  z-index: -1;
+
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 90, 90, 0.15),
+    transparent 60%
+  );
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.header {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.header h1 {
+  margin: 0 0 12px;
+  font-size: 1.8rem;
+  font-weight: 900;
+
+  color: #ff5a5a;
+  text-shadow: 0 0 14px rgba(255, 90, 90, 0.55);
+}
+
+/* FUNCTIE BLOK */
+
+.functie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.functie-embleem {
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(255, 80, 80, 0.6));
+}
+
+.functie-tekst {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffb3b3;
+  opacity: 0.9;
+}
+
+/* ======================================================
+   CARDS
+====================================================== */
+
+.card {
+  padding: 18px;
+  border-radius: 20px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.65),
+    inset 0 0 35px rgba(255, 90, 90, 0.06),
+    0 0 0 1px rgba(255, 90, 90, 0.15);
+}
+
+.card h2 {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+  color: #ff8b8b;
+  text-shadow: 0 0 8px rgba(255, 90, 90, 0.35);
+}
+
+/* ======================================================
+   VERDIENSTEN
+====================================================== */
+
+.earnings {
+  display: flex;
+  gap: 14px;
+}
+
+.earning {
+  flex: 1;
+  padding: 16px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 90, 90, 0.18),
+    rgba(255, 90, 90, 0.05)
+  );
+
+  box-shadow:
+    inset 0 0 24px rgba(255, 90, 90, 0.12),
+    0 0 0 1px rgba(255, 90, 90, 0.18);
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  opacity: 0.65;
+}
+
+.amount {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+
+  text-shadow:
+    0 0 10px rgba(255, 120, 120, 0.8),
+    0 0 24px rgba(255, 90, 90, 0.45);
+}
+
+/* ======================================================
+   RESULTATEN
+====================================================== */
+
+.resultaten {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 16px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 90, 90, 0.12),
+    rgba(255, 90, 90, 0.04)
+  );
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 90, 90, 0.08),
+    0 0 0 1px rgba(255, 90, 90, 0.15);
+}
+
+.result-label {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.result-value {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 120, 120, 0.7);
+}
+
+/* ======================================================
+   PLANNING
+====================================================== */
+
+.planning {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.planning-item {
+  padding: 14px 16px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.025)
+  );
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.planning-dag {
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.planning-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* ======================================================
+   LEADERBOARD BUTTON
+====================================================== */
+
+.leaderboard-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 18px;
+
+  border: none;
+  border-radius: 18px;
+
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    #ff4d4d,
+    #ff7676
+  );
+
+  box-shadow:
+    0 12px 32px rgba(255, 90, 90, 0.55),
+    0 0 28px rgba(255, 90, 90, 0.65);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.leaderboard-btn:active {
+  transform: scale(0.97);
+  box-shadow:
+    0 8px 22px rgba(255, 90, 90, 0.4),
+    0 0 20px rgba(255, 90, 90, 0.5);
+}

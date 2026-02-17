@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vaste lasten</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/src/assets/styles/medewerkers.css" />
+
+  <!-- ✅ JS MOET AAN -->
+  <script type="module" src="/src/pages/admin/vaste-lasten.js" defer></script>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <h1>🧾 Vaste lasten instellingen</h1>
+    <p style="margin-top:6px; color:#666;">
+      Alle vaste lasten worden <strong>per jaar</strong> ingevoerd
+    </p>
+  </header>
+
+  <!-- TABEL -->
+  <section class="section-box">
+    <table class="finance-table">
+      <thead>
+        <tr>
+          <th>Omschrijving</th>
+          <th style="text-align:right;">Bedrag per jaar (€)</th>
+          <th style="width:80px;"></th>
+        </tr>
+      </thead>
+
+      <!-- 🔑 BODY LEEG, WORDT DOOR JS GEVULD -->
+      <tbody id="vasteLastenBody"></tbody>
+    </table>
+  </section>
+
+  <!-- ACTIES -->
+  <div style="margin-top:20px; display:flex; gap:12px;">
+
+    <!-- ✅ ID MOET MATCHEN -->
+    <button class="secondary" id="btnAddRow">
+      ➕ Regel toevoegen
+    </button>
+
+    <!-- ✅ GEEN onclick, JS regelt dit -->
+    <button class="primary" id="btnSave">
+      💾 Opslaan & terug
+    </button>
+
+  </div>
+
+</main>
+</body>
+</html>

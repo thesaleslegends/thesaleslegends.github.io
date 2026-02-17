@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaste dagen overzicht</title>
+
+  <!-- Zelfde styling als dashboard -->
+  <link rel="stylesheet" href="/src/assets/styles/dashboard.medewerker.css" />
+</head>
+
+<body>
+
+  <!-- TOP NAV -->
+  <header class="topbar">
+
+    <div class="topbar-left">
+      <div class="dropdown">
+        <button class="dropdown-btn">Menu ▾</button>
+        <div class="dropdown-content">
+          <a href="/src/pages/employee/dashboard.html">
+            Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <img 
+        src="/src/assets/images/tsl-logo.png" 
+        alt="TSL Logo" 
+        class="topbar-logo"
+      />
+    </div>
+
+  </header>
+
+  <!-- CONTENT -->
+  <main class="dashboard">
+
+    <section class="header">
+      <h1>Hey legend 🔥</h1>
+    </section>
+
+    <section class="card">
+      <h2>Jouw vaste dagen zijn</h2>
+
+      <div id="vasteDagenLijst" class="resultaten">
+        <!-- Wordt gevuld via JS -->
+      </div>
+    </section>
+
+    <section class="card">
+      <p style="font-size:0.85rem; opacity:0.8;">
+        <strong>Let op!</strong><br>
+        Wil je deze vaste dagen aanpassen?<br>
+        App je team manager om deze aan te passen.
+      </p>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/pages/employee/vaste-dagenoverzicht.js"></script>
+
+</body>
+</html>

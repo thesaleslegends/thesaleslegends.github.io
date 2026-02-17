@@ -1,0 +1,140 @@
+/* ===============================
+   BASIS RESET
+================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+/* ===============================
+   PAGINA LAYOUT
+================================ */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.page-header .subtitle {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* ===============================
+   CARD
+================================ */
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px 28px 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.card h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ===============================
+   INFO GRID
+================================ */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===============================
+   STATUS
+================================ */
+#medewerkerStatus {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* ===============================
+   HIGHLIGHT KPI
+================================ */
+.info-row.highlight {
+  background: #f8fafc;
+  padding: 18px 16px;
+  border-radius: 10px;
+  border: none;
+}
+
+.info-row.highlight .label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-row.highlight .value {
+  font-size: 26px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+/* ===============================
+   ACTIES
+================================ */
+.actions {
+  margin-top: 24px;
+}
+
+.secondary-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.secondary-btn:hover {
+  background: #d1d5db;
+}

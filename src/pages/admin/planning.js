@@ -4,18 +4,28 @@ import { supabase } from "../../services/supabase.js";
    HELPERS
 ================================ */
 function getDateFromWeek(year, week, dayOfWeek) {
-  const firstThursday = new Date(year, 0, 4);
-  const firstWeekStart = new Date(firstThursday);
-  firstWeekStart.setDate(
-    firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7)
-  );
+  const simple = new Date(year, 0, 1 + (week - 1) * 7);
+  const day = simple.getDay();
+  const ISOweekStart = simple;
 
-  const date = new Date(firstWeekStart);
-  date.setDate(
-    firstWeekStart.getDate() + (week - 1) * 7 + (dayOfWeek - 1)
-  );
+  if (day <= 4)
+    ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+  else
+    ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
 
-  return date.toISOString().split("T")[0];
+  ISOweekStart.setDate(ISOweekStart.getDate() + (dayOfWeek - 1));
+
+  return ISOweekStart; // DATE object (geen string!)
+}
+
+function formatLocalDate(dateObj) {
+  return (
+    dateObj.getFullYear() +
+    "-" +
+    String(dateObj.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(dateObj.getDate()).padStart(2, "0")
+  );
 }
 
 /* ===============================
@@ -42,6 +52,9 @@ const closeModalBtn = document.getElementById("cancelShift");
 const deleteModal = document.getElementById("deleteModal");
 const confirmDeleteBtn = document.getElementById("confirmDelete");
 const cancelDeleteBtn = document.getElementById("cancelDelete");
+
+const loadFixedDaysBtn = document.getElementById("loadFixedDays");
+const visualBtn = document.getElementById("visualOverview");
 
 /* ===============================
    INIT
@@ -125,8 +138,8 @@ async function loadWeek() {
     return;
   }
 
-  renderWeek(shifts);
-  calculateTotals(shifts);
+  renderWeek(shifts || []);
+  calculateTotals(shifts || []);
 }
 
 /* ===============================
@@ -193,16 +206,18 @@ closeModalBtn.onclick = () => {
 };
 
 /* ===============================
-   OPSLAAN SHIFT (FIX)
+   OPSLAAN SHIFT
 ================================ */
 saveShiftBtn.onclick = async () => {
   if (!activeDay || !employeeSelect.value) return;
 
-  const datum = getDateFromWeek(
+  const dateObj = getDateFromWeek(
     currentYear,
     currentWeek,
     activeDay
   );
+
+  const datum = formatLocalDate(dateObj);
 
   const { error } = await supabase
     .from("planning")
@@ -210,7 +225,7 @@ saveShiftBtn.onclick = async () => {
       year: currentYear,
       week_number: currentWeek,
       day_of_week: activeDay,
-      datum,
+      datum: datum,
       employee_id: employeeSelect.value,
       half_day: halfDayCheckbox.checked,
     });
@@ -255,7 +270,7 @@ confirmDeleteBtn.onclick = async () => {
 };
 
 /* ===============================
-   VASTE DAGEN (FIX)
+   VASTE DAGEN
 ================================ */
 async function loadFixedDaysForWeek() {
   const { data: employees, error } = await supabase
@@ -273,7 +288,7 @@ async function loadFixedDaysForWeek() {
     .eq("week_number", currentWeek);
 
   const existingMap = new Set(
-    existingShifts.map(s => `${s.employee_id}-${s.day_of_week}`)
+    (existingShifts || []).map(s => `${s.employee_id}-${s.day_of_week}`)
   );
 
   const newShifts = [];
@@ -282,11 +297,12 @@ async function loadFixedDaysForWeek() {
     emp.vaste_dagen.forEach(day => {
       const key = `${emp.id}-${day}`;
       if (!existingMap.has(key)) {
+        const dateObj = getDateFromWeek(currentYear, currentWeek, day);
         newShifts.push({
           year: currentYear,
           week_number: currentWeek,
           day_of_week: day,
-          datum: getDateFromWeek(currentYear, currentWeek, day),
+          datum: formatLocalDate(dateObj),
           employee_id: emp.id,
           half_day: false
         });
@@ -305,10 +321,9 @@ async function loadFixedDaysForWeek() {
   loadWeek();
 }
 
-const loadFixedDaysBtn = document.getElementById("loadFixedDays");
-if (loadFixedDaysBtn) loadFixedDaysBtn.onclick = loadFixedDaysForWeek;
+if (loadFixedDaysBtn)
+  loadFixedDaysBtn.onclick = loadFixedDaysForWeek;
 
-const visualBtn = document.getElementById("visualOverview");
 if (visualBtn) {
   visualBtn.onclick = () => {
     window.location.href = "/src/pages/admin/visueel.html";
