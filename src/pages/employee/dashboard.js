@@ -112,13 +112,13 @@ if (embleemEl && medewerker.functie) {
   const functie = medewerker.functie.toLowerCase().trim();
 
   if (functie.includes("sales starter")) {
-    embleemEl.src = "src/assets/images/sales-starter.png";
+    embleemEl.src = "/src/assets/images/sales-starter.png";
   } 
   else if (functie.includes("junior legend")) {
-    embleemEl.src = "src/assets/images/junior-legend.png";
+    embleemEl.src = "/src/assets/images/junior-legend.png";
   } 
   else if (functie.includes("sales legend")) {
-    embleemEl.src = "src/assets/images/sales-legend.png";
+    embleemEl.src = "/src/assets/images/sales-legend.png";
   } 
   else {
     embleemEl.style.display = "none";
